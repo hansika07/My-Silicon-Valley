@@ -5,6 +5,7 @@ var foodGroup, junkFoodGroup;
 var strawberryImg, appleImg, bananaImg, burgerImg, food1Img;
 var donutImg, chocobarImg;
 var score = 0;
+var gameState = 0;
 function preload() {
     girl_running = loadAnimation("Run (1).png", "Run (2).png", "Run (3).png",
         "Run (4).png", "Run (5).png", "Run (6).png", "Run (7).png", "Run (8).png",
@@ -32,6 +33,7 @@ function setup() {
 
 function draw() {
     background(bgImage);
+    if(gameState===0){
     fill("red");
     textSize(25);
     text("Immunity: " + score, 200, 50);
@@ -49,17 +51,21 @@ function draw() {
         score -= 30;
         junkFoodGroup.destroyEach();
     }
-    if (score < -50) {
-        textSize(30);
-        fill("red");
-        text("Game Ended", 300, 300);
-        foodGroup.visible = false;
-        junkFoodGroup.visible = false;
-        player.visible = false;
-    }
     spawnJunk();
     spawnFood();
     drawSprites();
+    if(score<-50){
+        gameState = 1;
+    }
+}
+if(gameState===1){
+            textSize(30);
+            fill("red");
+            text("Game Ended", 600, 300);
+            fill("black");
+            textSize(50);
+            text("So we should not eat unhealthy food or junk food",30,100);
+    }
 }
 
 function spawnFood() {
